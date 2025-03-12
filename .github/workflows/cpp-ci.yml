@@ -17,7 +17,12 @@ jobs:
       run: |
         make
 
-    - name: Run tests
+    - name: Run gtest tests
       run: |
         make test
         ./test-ASCII85_app
+
+    - name: Run test.sh
+      run: |
+        chmod +x test/test.sh
+        ./test/test.sh
