@@ -1,6 +1,7 @@
 #include "../include/ascii85.h"
 #include <iostream>
 #include <cmath>
+#include <cstdint>
 
 using namespace std;
 
