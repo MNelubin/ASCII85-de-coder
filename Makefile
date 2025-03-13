@@ -2,6 +2,7 @@
 PROJECT = ASCII85_app
 LIBPROJECT = $(PROJECT).a
 TESTPROJECT = test-$(PROJECT)
+TEST_SCRIPT = test/test.sh
 
 # Directories
 SRC_DIR = src
@@ -36,7 +37,7 @@ TEST_OBJ = $(TEST_SRC:.cpp=.o)
 DEPS = $(wildcard $(INC_DIR)/*.h)
 
 # Targets
-.PHONY: all test check clean cleanall
+.PHONY: all test integration-test clean cleanall
 
 all: $(PROJECT)
 
@@ -55,7 +56,15 @@ $(TESTPROJECT): $(TEST_OBJ) $(LIBPROJECT)
 
 # Run tests
 test: $(TESTPROJECT)
+	@echo "Running unit tests..."
 	@./$(TESTPROJECT)
+
+integration-test: $(PROJECT) $(TEST_SCRIPT)
+	@echo "Running integration tests..."
+	@chmod +x $(TEST_SCRIPT)
+	@./$(TEST_SCRIPT)
+
+testall: test integration-test
 
 # Compile C++ files
 %.o: %.cpp $(DEPS)
@@ -67,3 +76,4 @@ clean:
 
 cleanall: clean
 	rm -f $(PROJECT) $(LIBPROJECT) $(TESTPROJECT)
+	rm -rf test_data
